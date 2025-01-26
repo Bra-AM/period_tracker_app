@@ -54,30 +54,6 @@
     nav a:hover {
       text-decoration: underline;
     }
-    /* Dropdown */
-    .dropdown {
-      display: none;
-      position: absolute;
-      background: var(--white);
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      border: 1px solid #f2f2f2;
-      top: 40px; /* below nav item */
-      left: 0;
-      z-index: 999;
-    }
-    .dropdown li {
-      display: block;
-      margin: 0;
-      white-space: nowrap;
-    }
-    .dropdown li a {
-      display: block;
-      padding: 10px;
-      color: var(--dark-rose);
-    }
-    nav li:hover .dropdown {
-      display: block;
-    }
 
     /* SECTIONS */
     section {
@@ -99,10 +75,24 @@
     }
     .box p {
       line-height: 1.6;
+      margin-bottom: 15px;
     }
-    .inline-links {
+    .buttons-row {
       text-align: center;
       margin-top: 20px;
+    }
+    .buttons-row a {
+      display: inline-block;
+      margin: 0 10px;
+      padding: 10px 15px;
+      background: var(--dark-rose);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .buttons-row a:hover {
+      background: #a10050;
     }
 
     /* TEAM */
@@ -153,22 +143,11 @@
       background-color: #a10050;
     }
 
-    /* Auth forms */
-    #login-form, #register-form {
-      background: var(--white);
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      padding: 20px;
-    }
-    #register-form {
-      display: none; /* hidden until user clicks register */
+    /* Hide forms/menus by default */
+    #register-form, #app-menu {
+      display: none;
     }
 
-    /* Main menu (buttons) after login */
-    #app-menu {
-      display: none; /* hidden until user logs in */
-      text-align: center;
-    }
     .app-buttons {
       display: flex;
       flex-wrap: wrap;
@@ -190,9 +169,9 @@
       background-color: #a10050;
     }
 
-    /* Calendar */
+    /* CALENDAR */
     #calendar-section {
-      display: none; /* hidden by default, shown when user clicks 'Register My Period' */
+      display: none; /* hidden until user clicks 'Register My Period' */
       margin-top: 20px;
       text-align: center;
     }
@@ -202,6 +181,7 @@
       gap: 10px;
       justify-content: center;
       margin-bottom: 20px;
+      margin-top: 20px;
     }
     .day {
       width: 40px;
@@ -230,8 +210,8 @@
       margin-top: 50px;
     }
 
-    /* Hide all sections by default except home (toggle with JS) */
-    #home-section, #about-section, #mission-section, #team-section, #app-section {
+    /* Hide sections except home by default */
+    #home-section, #mission-section, #team-section, #app-section {
       display: none;
     }
   </style>
@@ -242,13 +222,8 @@
     <div class="brand">period_tracker_app</div>
     <ul>
       <li><a href="#home" onclick="showSection('home-section')">Home</a></li>
-      <li>
-        <a href="#">About</a>
-        <ul class="dropdown">
-          <li><a href="#mission" onclick="showSection('mission-section')">Mission</a></li>
-          <li><a href="#team" onclick="showSection('team-section')">Team</a></li>
-        </ul>
-      </li>
+      <li><a href="#mission" onclick="showSection('mission-section')">Mission</a></li>
+      <li><a href="#team" onclick="showSection('team-section')">Team</a></li>
       <li><a href="#app" onclick="showSection('app-section')">Try Our App</a></li>
     </ul>
   </nav>
@@ -258,14 +233,22 @@
     <h1>Welcome to period_tracker_app</h1>
     <div class="box">
       <p>
-        period_tracker_app is designed to help you understand, track, and manage your menstrual cycle in a way that’s especially friendly for teens (and their families). We want to simplify this journey and empower you to feel confident about your body—every step of the way.
+        <strong>period_tracker_app</strong> is designed to help you understand, track, and manage your menstrual cycle in a way that’s especially didactic, organized, and supportive for teens and college students. Unlike other period-tracking apps, we focus on making content engaging and accessible—so you can learn how to use your hormones to your advantage rather than just cope with them.
       </p>
+      <p>
+        We believe that hormones don’t have to be the source of pain or discomfort; with the right knowledge, they can boost your productivity, creativity, and overall well-being. Our goal is to empower girls and women to approach their cycles with confidence. By shedding the mystery and providing clear, age-appropriate info, we hope to turn what’s often seen as a burden into a powerful ally.
+      </p>
+      <p><strong>The story:</strong></p>
       <p>
         The idea for this app was born when my little sister first started her period. I wanted to help her feel informed, comfortable, and prepared—yet every period-tracking app I found was overwhelming, dense, or simply not designed for younger audiences. As I spoke with more women, from teenagers to college students, I realized they too were dissatisfied with existing apps. Many struggled to understand their cycles, and the information they received in schools or at home felt incomplete.
       </p>
       <p>
         Parents also voiced their concerns. Some wanted to share more detailed knowledge about topics like sexual health, hormones, and cycle tracking; others preferred a more gradual approach. They needed a resource that could adapt to each family’s comfort level. Seeing this universal need for a teen-friendly, parent-approved, and truly empowering platform, I decided to build an app that would close these gaps—one that balances in-depth knowledge with a thoughtful presentation for young minds.
       </p>
+      <div class="buttons-row">
+        <a href="#mission" onclick="showSection('mission-section')">Our Mission</a>
+        <a href="#team" onclick="showSection('team-section')">Meet the Team</a>
+      </div>
     </div>
   </section>
 
@@ -306,6 +289,7 @@
   <section id="app-section">
     <h2>Try Our App</h2>
     <div class="app-container">
+
       <!-- LOGIN FORM -->
       <div id="login-form">
         <h3>Log In</h3>
@@ -326,12 +310,12 @@
       <div id="register-form">
         <h3>Register</h3>
         <div class="form-group">
-          <label for="reg-username">Username:</label>
-          <input type="text" id="reg-username" placeholder="Create username" />
+          <label for="reg-username">Nickname (Username):</label>
+          <input type="text" id="reg-username" placeholder="Create a username" />
         </div>
         <div class="form-group">
           <label for="reg-password">Password:</label>
-          <input type="password" id="reg-password" placeholder="Create password" />
+          <input type="password" id="reg-password" placeholder="Create a password" />
         </div>
         <button class="btn" onclick="registerUser()">Create Account</button>
         <br /><br />
@@ -357,6 +341,7 @@
           <h4>Click on any date(s) to register your period days</h4>
           <div class="calendar-grid" id="calendar-grid"></div>
         </div>
+
       </div>
     </div>
   </section>
@@ -377,7 +362,8 @@
 
       document.getElementById(id).style.display = 'block';
     }
-    // Show home by default:
+
+    // Show Home by default on page load
     showSection('home-section');
 
     /******************************
@@ -387,16 +373,17 @@
     const registerForm = document.getElementById('register-form');
     const appMenu      = document.getElementById('app-menu');
 
+    // In a real app, you'd use a server/database. For demo, we store in localStorage:
     let users = JSON.parse(localStorage.getItem('users')) || {};
 
     function toggleRegister() {
       // Hide login, show register or vice versa
       if (registerForm.style.display === 'none') {
         registerForm.style.display = 'block';
-        loginForm.style.display = 'none';
+        loginForm.style.display    = 'none';
       } else {
         registerForm.style.display = 'none';
-        loginForm.style.display = 'block';
+        loginForm.style.display    = 'block';
       }
     }
 
@@ -404,25 +391,18 @@
       const username = document.getElementById('reg-username').value.trim();
       const password = document.getElementById('reg-password').value.trim();
       if (!username || !password) {
-        alert('Please provide a username and password.');
+        alert('Please enter a username and password.');
         return;
       }
       if (users[username]) {
         alert('Username already exists. Choose another.');
         return;
       }
-      // Create a random user ID
       const userId = 'ID-' + Math.floor(Math.random() * 1000000);
-
-      users[username] = {
-        password: password,
-        id: userId,
-        periods: [] // array of selected days
-      };
+      users[username] = { password, id: userId, periods: [] };
       localStorage.setItem('users', JSON.stringify(users));
 
       alert(`Welcome, ${username}! Your account is created. Your ID: ${userId}`);
-      // Switch back to login form
       toggleRegister();
     }
 
@@ -439,7 +419,7 @@
         registerForm.style.display = 'none';
         appMenu.style.display      = 'block';
       } else {
-        alert('Invalid credentials. Please try again.');
+        alert('Invalid username or password.');
       }
     }
 
@@ -447,12 +427,11 @@
      * CALENDAR LOGIC
      ******************************/
     const calendarGrid = document.getElementById('calendar-grid');
-    const monthsToShow = 1; // just 1 month example
-    const daysInMonth  = 31; // for a single example month
     let currentUser    = null;
+    const daysInMonth  = 31; // Example of a 31-day month
 
     function initCalendar() {
-      // Create day cells
+      calendarGrid.innerHTML = ''; // Clear previous days
       for (let d = 1; d <= daysInMonth; d++) {
         const dayCell = document.createElement('div');
         dayCell.className = 'day';
@@ -462,26 +441,18 @@
       }
     }
 
-    // Highlight stored days if user reopens calendar
     function renderSelectedDays() {
-      // If no user is logged in, skip
       currentUser = document.getElementById('user-welcome').textContent;
       if (!currentUser || !users[currentUser]) return;
 
-      // Get user's selected days
       const selectedDays = users[currentUser].periods || [];
-      // Clear all highlights
       const dayCells = calendarGrid.querySelectorAll('.day');
       dayCells.forEach(cell => {
         cell.classList.remove('highlighted');
       });
-
-      // Re-highlight user-saved days
       selectedDays.forEach(day => {
         const cell = dayCells[day - 1];
-        if (cell) {
-          cell.classList.add('highlighted');
-        }
+        if (cell) cell.classList.add('highlighted');
       });
     }
 
@@ -491,13 +462,10 @@
         alert('Please log in first.');
         return;
       }
-
       let selectedDays = users[currentUser].periods;
       if (selectedDays.includes(day)) {
-        // remove day
         selectedDays = selectedDays.filter(d => d !== day);
       } else {
-        // add day
         selectedDays.push(day);
       }
       users[currentUser].periods = selectedDays;
@@ -507,7 +475,6 @@
 
     function toggleCalendar() {
       const calendarSection = document.getElementById('calendar-section');
-      // Show/hide calendar
       if (calendarSection.style.display === 'none') {
         calendarSection.style.display = 'block';
         initCalendar();
@@ -516,8 +483,6 @@
         calendarSection.style.display = 'none';
       }
     }
-
-    // Start: no calendar rendered yet
   </script>
 </body>
 </html>
